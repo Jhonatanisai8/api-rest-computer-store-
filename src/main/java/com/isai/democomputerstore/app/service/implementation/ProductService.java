@@ -72,6 +72,9 @@ public class ProductService
 
     @Override
     public void delete(Integer idSearch) {
-
+        if (productRepository.findById(idSearch).isEmpty()) {
+            throw new ProductNotFoundException();
+        }
+        productRepository.deleteById(idSearch);
     }
 }
