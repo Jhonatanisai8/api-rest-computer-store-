@@ -34,7 +34,10 @@ public class ProductService
 
     @Override
     public List<ProductResponse> findAll() {
-        return List.of();
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::toProductResponse)
+                .toList();
     }
 
     @Override
