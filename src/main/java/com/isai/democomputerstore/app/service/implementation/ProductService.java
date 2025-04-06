@@ -1,5 +1,6 @@
 package com.isai.democomputerstore.app.service.implementation;
 
+import com.isai.democomputerstore.app.exceptions.MakerNotFoundException;
 import com.isai.democomputerstore.app.exceptions.ProductNotFoundException;
 import com.isai.democomputerstore.app.mappers.ProductMapper;
 import com.isai.democomputerstore.app.models.dtos.CreateProductRequest;
@@ -57,7 +58,16 @@ public class ProductService
 
     @Override
     public ProductResponse update(Integer idSearch, CreateProductRequest entityRequest) {
-        return null;
+        return productRepository.findById(idSearch)
+                .map(product -> makerRepository.findById(entityRequest.getIdMaker())
+                        .map(maker -> {
+                            product.setProductName(entityRequest.getProductName());
+                            product.setProductPrice(entityRequest.getProductPrice());
+                            product.setMaker(maker);
+                            return productRepository.save(product);
+                        })).orElseThrow(MakerNotFoundException::new)
+                .map(productMapper::toProductResponse)
+                .orElseThrow(ProductNotFoundException::new);
     }
 
     @Override
