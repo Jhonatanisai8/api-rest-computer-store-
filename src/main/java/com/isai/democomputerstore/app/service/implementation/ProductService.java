@@ -5,6 +5,7 @@ import com.isai.democomputerstore.app.mappers.ProductMapper;
 import com.isai.democomputerstore.app.models.dtos.CreateProductRequest;
 import com.isai.democomputerstore.app.models.dtos.MakerResponse;
 import com.isai.democomputerstore.app.models.dtos.ProductResponse;
+import com.isai.democomputerstore.app.models.entitys.Product;
 import com.isai.democomputerstore.app.repository.MakerRepository;
 import com.isai.democomputerstore.app.repository.ProductRepository;
 import com.isai.democomputerstore.app.service.CrudService;
@@ -41,8 +42,17 @@ public class ProductService
     }
 
     @Override
-    public ProductResponse save(MakerResponse entityRequest) {
-        return null;
+    public ProductResponse save(CreateProductRequest entityRequest) {
+        return makerRepository.findById(entityRequest.getIdMaker())
+                .map(maker -> {
+                    Product product = Product.builder()
+                            .productName(entityRequest.getProductName())
+                            .productPrice(entityRequest.getProductPrice())
+                            .maker(maker)
+                            .build();
+                    return productRepository.save(product);
+                }).map(productMapper::toProductResponse).
+                orElseThrow(ProductNotFoundException::new);
     }
 
     @Override

@@ -7,7 +7,7 @@ public interface CrudService<T, Y, U> {
 
     List<T> findAll();
 
-    T save(Y entityRequest);
+    T save(U entityRequest);
 
     T update(Integer idSearch, U entityRequest);
 
