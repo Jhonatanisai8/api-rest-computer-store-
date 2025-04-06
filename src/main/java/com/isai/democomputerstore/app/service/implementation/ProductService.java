@@ -77,4 +77,13 @@ public class ProductService
         }
         productRepository.deleteById(idSearch);
     }
+
+    public List<ProductResponse> findAllByMaker(Integer idMaker) {
+        return makerRepository.findById(idMaker)
+                .map(productRepository::findAllByMaker)
+                .map(products -> products.stream()
+                        .map(productMapper::toProductResponse)
+                        .toList())
+                .orElseThrow(ProductNotFoundException::new);
+    }
 }
