@@ -23,6 +23,11 @@ public class ProductController {
         return productService.findAll();
     }
 
+    @RequestMapping(path = "/findProductById/{idProduct}", method = RequestMethod.GET)
+    public ProductResponse findProductById(@Valid @PathVariable Integer idProduct) {
+        return productService.findById(idProduct);
+    }
+
 
     @RequestMapping(path = "/findAllProductsByMaker/{idMaker}", method = RequestMethod.GET)
     public List<ProductResponse> findAllProductsByMaker(@Validated @PathVariable Integer idMaker) {
