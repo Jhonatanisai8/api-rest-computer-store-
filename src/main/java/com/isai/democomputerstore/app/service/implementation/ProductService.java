@@ -53,7 +53,7 @@ public class ProductService
                             .build();
                     return productRepository.save(product);
                 }).map(productMapper::toProductResponse).
-                orElseThrow(ProductNotFoundException::new);
+                orElseThrow(MakerNotFoundException::new);
     }
 
     @Override
@@ -84,6 +84,6 @@ public class ProductService
                 .map(products -> products.stream()
                         .map(productMapper::toProductResponse)
                         .toList())
-                .orElseThrow(ProductNotFoundException::new);
+                .orElseThrow(MakerNotFoundException::new);
     }
 }
