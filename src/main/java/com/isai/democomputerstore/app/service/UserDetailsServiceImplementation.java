@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+personalizada del servicio de autenticación de Spring Security
+ */
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImplementation
@@ -36,7 +39,7 @@ public class UserDetailsServiceImplementation
                 .stream()
                 .flatMap(role -> role.getPermissions().stream())
                 .forEach(permission -> {
-                    authorities.add(new SimpleGrantedAuthority(permission.getNamePermission()));
+                    authorities.add(new SimpleGrantedAuthority(permission   .getNamePermission()));
                 });
 
         return new org.springframework.security.core.userdetails.User(
