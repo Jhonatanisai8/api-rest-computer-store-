@@ -39,7 +39,7 @@ public class UserDetailsServiceImplementation
                 .stream()
                 .flatMap(role -> role.getPermissions().stream())
                 .forEach(permission -> {
-                    authorities.add(new SimpleGrantedAuthority(permission   .getNamePermission()));
+                    authorities.add(new SimpleGrantedAuthority(permission.getNamePermission()));
                 });
 
         return new org.springframework.security.core.userdetails.User(

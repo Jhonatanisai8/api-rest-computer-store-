@@ -26,7 +26,7 @@ public class User {
     private String userName;
 
     @NotEmpty
-    @Size(min = 3, max = 10)
+    @Size(min = 3, max = 60)
     private String userPasswor;
 
     private Boolean isEnabled;
