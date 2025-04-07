@@ -8,6 +8,7 @@ import static com.isai.democomputerstore.app.utils.ErrorCatalog.*;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -65,8 +66,20 @@ public class GlobalControllerAdvice {
     public ErrorReponse handlerExceptionInternalServer(Exception exception) {
         return ErrorReponse.builder()
                 .codeError(GENERIC_ERROR.getCodeError())
-                .statusHttpError(HttpStatus.NOT_FOUND)
+                .statusHttpError(HttpStatus.INTERNAL_SERVER_ERROR)
                 .messageError(GENERIC_ERROR.getMessageError())
+                .detailsMessagesErrors(Collections.singletonList(exception.getMessage()))
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ErrorReponse handlerExceptionUnauthorized(Exception exception) {
+        return ErrorReponse.builder()
+                .codeError(UNAUTHORIZED_ERROR.getCodeError())
+                .statusHttpError(HttpStatus.UNAUTHORIZED)
+                .messageError(UNAUTHORIZED_ERROR.getMessageError())
                 .detailsMessagesErrors(Collections.singletonList(exception.getMessage()))
                 .timestamp(LocalDateTime.now())
                 .build();
