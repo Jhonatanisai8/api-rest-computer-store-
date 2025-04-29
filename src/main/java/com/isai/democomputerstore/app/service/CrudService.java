@@ -2,7 +2,7 @@ package com.isai.democomputerstore.app.service;
 
 import java.util.List;
 
-public interface CrudService<T, Y, U> {
+public interface CrudService<T, U> {
     T findById(Integer idSearch);
 
     List<T> findAll();

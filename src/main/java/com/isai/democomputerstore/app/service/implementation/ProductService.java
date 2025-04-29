@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService
-        implements CrudService<ProductResponse, MakerResponse, CreateProductRequest> {
+        implements CrudService<ProductResponse,CreateProductRequest> {
 
     private final ProductRepository productRepository;
 
